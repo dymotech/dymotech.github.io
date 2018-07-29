@@ -1,0 +1,77 @@
+defaults: &defaults
+  # working_directory: ./circleci
+  docker:
+    - image: circleci/node:10-stretch
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: echo "A first hello"
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: CI=true npm run test
+  react:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: CI=true npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - build
+  deploy:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: "Test the commit for org or team processes"
+          command: |
+            git config --global user.email csmartin1024@gmail.com
+            git config --global user.name Circle SeeEye
+            npm run deploy
+workflows:
+  version: 2
+  build_test_deploy:
+    jobs:
+      - build
+          # requires:
+          #   - lint
+      - test:
+          requires:
+            - build
+      - react:
+          requires:
+            - test
+      - hold:
+          type: approval
+          requires:
+            - react
+      - deploy:
+          requires:
+            - hold
+          filters:
+            branches:
+              only: source                
