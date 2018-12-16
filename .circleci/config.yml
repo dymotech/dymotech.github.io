@@ -19,7 +19,7 @@ jobs:
       - run: git submodule sync && git submodule update --init
 
       # build with Hugo
-      - run: HUGO_ENV=production hugo -t dimension -v
+      - run: HUGO_ENV=production hugo -t meghna-hugo -v
 
       # - run:
       #     name: test our generated HTML files
