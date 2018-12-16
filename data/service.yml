@@ -1,0 +1,15 @@
+enable : true
+heading : Our
+headingSpan : Services
+serviceItem :
+  - icon : tf-ion-laptop
+    title : Responsive Design
+    content : Lorem ipsum dolor sit amet, consectetur.. Sed id lorem eget orci dictum facilisis vel id tellus.Nullam iaculis arcu at mauris dapibus consectetur.
+    
+  - icon : tf-dial
+    title : APIs
+    content : Lorem ipsum dolor sit amet, consectetur.. Sed id lorem eget orci dictum facilisis vel id tellus.Nullam iaculis arcu at mauris dapibus consectetur.
+    
+  - icon : tf-target3
+    title : App Development
+    content : Lorem ipsum dolor sit amet, consectetur.. Sed id lorem eget orci dictum facilisis vel id tellus.Nullam iaculis arcu at mauris dapibus consectetur.
